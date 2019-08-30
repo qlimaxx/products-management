@@ -44,7 +44,12 @@ def handle_error(func):
 @handle_error
 def get_products():
     data = []
-    for product in Product.objects.all():
+    if request.args.get('category'):
+        products = Product.objects(
+            categories=request.args.get('category'))
+    else:
+        products = Product.objects.all()
+    for product in products:
         data.append(product.to_dict())
     return jsonify(data)
 
@@ -95,3 +100,15 @@ def update_product(product_id):
 def delete_product(product_id):
     Product.objects.get(uuid=product_id).delete()
     return ''
+
+
+@app.route('/', methods=['DELETE'])
+@require_auth
+@handle_error
+def delete_products():
+    if request.args.get('category'):
+        Product.objects(
+            categories=request.args.get('category')).delete()
+        return '', 200
+    else:
+        return '', 400
