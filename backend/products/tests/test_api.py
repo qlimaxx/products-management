@@ -38,6 +38,15 @@ class ApiTest(unittest.TestCase):
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(len(resp.json), 1)
 
+    def test_get_products_with_category_filter(self):
+        product = Product(name=NAME, price=PRICE, categories=CATEGORIES).save()
+        Product(name=NAME2, price=PRICE2, categories=CATEGORIES2).save()
+        resp = self.app.get(
+            '/?category={}'.format(str(CATEGORIES[0])), headers=self.headers)
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(len(resp.json), 1)
+        self.assertEqual(resp.json, [product.to_dict()])
+
     def test_get_existing_product(self):
         product = Product(name=NAME, price=PRICE).save()
         resp = self.app.get('/{}'.format(product.uuid), headers=self.headers)
@@ -143,3 +152,16 @@ class ApiTest(unittest.TestCase):
         resp = self.app.delete(
             '/{}'.format(product.uuid), headers=self.headers)
         self.assertEqual(resp.status_code, 404)
+
+    def test_delete_products_with_category_filter(self):
+        Product(name=NAME, price=PRICE, categories=CATEGORIES).save()
+        Product(name=NAME2, price=PRICE2, categories=CATEGORIES).save()
+        self.assertEqual(Product.objects.count(), 2)
+        resp = self.app.delete(
+            '/?category={}'.format(str(CATEGORIES[0])), headers=self.headers)
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(Product.objects.count(), 0)
+
+    def test_delete_products_without_category_filter(self):
+        resp = self.app.delete('/', headers=self.headers)
+        self.assertEqual(resp.status_code, 400)

@@ -17,4 +17,4 @@ class Product(Document):
             'uuid': str(self.uuid),
             'name': self.name,
             'price': self.price,
-            'categories': self.categories}
+            'categories': [str(e) for e in self.categories]}
