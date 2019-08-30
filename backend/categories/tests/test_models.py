@@ -3,7 +3,7 @@ import unittest
 from mongoengine import connect, disconnect
 from mongoengine.errors import ValidationError
 
-from categories.models import Category
+from ..models import Category
 
 
 NAME = 'Category1'

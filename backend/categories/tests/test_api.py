@@ -1,7 +1,7 @@
 import unittest
 
-from categories import api
-from categories.models import Category
+from .. import api
+from ..models import Category
 
 
 NAME = 'Category1'
