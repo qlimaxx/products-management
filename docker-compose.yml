@@ -28,3 +28,31 @@ services:
       - MONGO_URI=mongomock://localhost
     volumes:
       - ./backend/categories:/app/src
+  productsdb:
+    container_name: products-db
+    image: mongo
+  products:
+    container_name: api-products
+    build: backend/products/
+    command: python -m flask run --host=0.0.0.0
+    environment:
+      - FLASK_APP=api.py
+      - API_KEY=testkey
+      - MONGO_URI=mongodb://productsdb
+    ports:
+      - "5002:5000"
+    volumes:
+      - ./backend/products:/app/src
+    depends_on:
+      - productsdb
+    links:
+      - productsdb
+  products-test:
+    container_name: api-products-test
+    build: backend/products/
+    command: /bin/sh -c "coverage run --source='.' /usr/local/bin/nosetests; coverage report -m"
+    environment:
+      - API_KEY=testkey
+      - MONGO_URI=mongomock://localhost
+    volumes:
+      - ./backend/products:/app/src
