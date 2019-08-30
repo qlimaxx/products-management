@@ -36,8 +36,6 @@ def handle_error(func):
             return jsonify({'details': str(ex)}), 400
         except Category.DoesNotExist as ex:
             return jsonify({'details': str(ex)}), 404
-        except Exception:
-            return '', 400
     return error
 
 
@@ -56,6 +54,8 @@ def get_categories():
 @handle_error
 def create_category():
     data = request.get_json()
+    if not data:
+        return '', 400
     category = Category(name=data.get('name'))
     category.save()
     return jsonify(category.to_dict())
@@ -74,6 +74,8 @@ def get_category(category_id):
 @handle_error
 def update_category(category_id):
     data = request.get_json()
+    if not data:
+        return '', 400
     category = Category.objects.get(uuid=category_id)
     category.name = data.get('name')
     category.save()
