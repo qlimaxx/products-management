@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="col-sm-8 offset-sm-2">
+        <h3 class="mb-3 text-center">Add Product</h3>
+        <div class="form-group row" style="margin-top: 60px">
+            <label class="col-sm-2 col-form-label">Name: </label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" placeholder="Enter Name" [(ngModel)]="productData.name">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Price: </label>
+            <div class="col-sm-10">
+                <input type="number" step="any" class="form-control" placeholder="Enter Price" [(ngModel)]="productData.price">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Categories: </label>
+            <div class="col-sm-10">
+                <ng-select [items]="categories | async" [multiple]="true" [closeOnSelect]="false" [searchable]="false"
+                    bindLabel="name" placeholder="Choose Categories" [(ngModel)]="selectedCategories">
+                </ng-select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-success btn-lg btn-block" (click)="createProduct()">Add</button>
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-outline-primary btn-lg btn-block" routerLink="/products">Cancel</button>
+        </div>
+
+    </div>
+</div>

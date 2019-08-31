@@ -1,0 +1,44 @@
+<div class="container">
+    <div *ngIf="products">
+        <h3 class="mb-3 text-center">Products</h3>
+
+        <div class="no-data text-center" *ngIf="!products.length">
+            <p>There are no products.</p>
+            <button class="btn btn-outline-primary" routerLink="/products/new">Add Product</button>
+        </div>
+
+        <div class="col-md-12" *ngIf="products.length">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Categories</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let product of products">
+                        <td>
+                            <a routerLink="/products/{{product.uuid}}">{{product.name}}</a>
+                        </td>
+                        <td>
+                            <ul>
+                                <li *ngFor="let category of product.categories">
+                                    <a routerLink="/categories/{{category.uuid}}">{{category.name}}</a>
+                                </li>
+                            </ul>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-success btn-sm"
+                                routerLink="/products/{{product.uuid}}/edit">Edit</button>
+                            &nbsp;
+                            <button type="button" class="btn btn-danger btn-sm"
+                                (click)="deleteProduct(product.uuid)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
