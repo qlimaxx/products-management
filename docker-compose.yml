@@ -56,3 +56,24 @@ services:
       - MONGO_URI=mongomock://localhost
     volumes:
       - ./backend/products:/app/src
+  gateway:
+    container_name: api-gateway
+    build: backend/gateway/
+    command: python -m flask run --host=0.0.0.0
+    environment:
+      - FLASK_APP=api.py
+      - API_KEY=testkey
+      - URL_CATEGORIES=http://categories:5000
+      - URL_PRODUCTS=http://products:5000
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend/gateway:/app/src
+  gateway-test:
+    container_name: api-gateway-test
+    build: backend/gateway/
+    command: /bin/sh -c "coverage run --source='.' /usr/local/bin/nosetests; coverage report -m"
+    environment:
+      - API_KEY=testkey
+    volumes:
+      - ./backend/gateway:/app/src
