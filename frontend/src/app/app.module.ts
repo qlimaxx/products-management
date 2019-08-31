@@ -6,10 +6,18 @@ import { NgSelectModule } from '@ng-select/ng-select';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CategoryListComponent } from './category-list/category-list.component';
+import { CategoryDetailComponent } from './category-detail/category-detail.component';
+import { CategoryCreateComponent } from './category-create/category-create.component';
+import { CategoryEditComponent } from './category-edit/category-edit.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CategoryListComponent,
+    CategoryDetailComponent,
+    CategoryCreateComponent,
+    CategoryEditComponent,
   ],
   imports: [
     BrowserModule,

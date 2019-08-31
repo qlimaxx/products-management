@@ -1,0 +1,34 @@
+<div class="container">
+    <div class="col-sm-8 offset-sm-2" *ngIf="category">
+        <h3 class="mb-3 text-center">Category Details</h3>
+        <div class="form-group row" style="margin-top: 60px">
+            <label class="col-sm-2 col-form-label">Name: </label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" [(ngModel)]="category.name" disabled>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Products: </label>
+            <div class="col-sm-10">
+                <ng-select [disabled]="true" [items]="category.products" [multiple]="true" [closeOnSelect]="false"
+                    [searchable]="false" bindLabel="name" [(ngModel)]="category.products">
+                </ng-select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-success btn-lg btn-block"
+                routerLink="/categories/{{category.uuid}}/edit">Edit</button>
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-danger btn-lg btn-block" (click)="deleteCategory(category.uuid)">Delete</button>
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-outline-primary btn-lg btn-block" routerLink="/categories">Cancel</button>
+        </div>
+
+    </div>
+</div>
