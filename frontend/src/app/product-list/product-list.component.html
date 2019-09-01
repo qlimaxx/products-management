@@ -14,12 +14,16 @@
                         <th scope="col">Name</th>
                         <th scope="col">Price</th>
                         <th scope="col">Categories</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let product of products">
                         <td>
                             <a routerLink="/products/{{product.uuid}}">{{product.name}}</a>
+                        </td>
+                        <td>
+                            {{product.price}}
                         </td>
                         <td>
                             <ul>
