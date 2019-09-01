@@ -1,0 +1,8 @@
+FROM node:10-alpine
+RUN apk update && apk add --no-cache chromium \
+    && rm -rf /var/cache/* \
+    && mkdir /var/cache/apk
+WORKDIR /app
+COPY package.json package-lock.json /app/
+RUN npm install
+COPY ./ /app/
