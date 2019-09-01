@@ -6,6 +6,6 @@ WORKDIR /app
 COPY package.json package-lock.json /app/
 RUN npm install
 COPY ./ /app/
-RUN npm run build --prod
+RUN npm run build
 RUN cp -r /app/dist/ngapp/* /usr/share/nginx/html/
 COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
