@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  baseURL = 'http://localhost:5000/';
+  baseURL = environment.apiURL;
 
   headers = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'X-API-Key': 'testkey'
+      'X-API-Key': environment.apiKey
     })
   };
 
