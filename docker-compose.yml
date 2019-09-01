@@ -9,8 +9,9 @@ services:
     command: python -m flask run --host=0.0.0.0
     environment:
       - FLASK_APP=api.py
-      - API_KEY=testkey
       - MONGO_URI=mongodb://categoriesdb
+    env_file:
+      - backend/.envs/key.env
     ports:
       - "5001:5000"
     volumes:
@@ -23,9 +24,9 @@ services:
     container_name: api-categories-test
     build: backend/categories/
     command: /bin/sh -c "coverage run --source='.' /usr/local/bin/nosetests; coverage report -m"
-    environment:
-      - API_KEY=testkey
-      - MONGO_URI=mongomock://localhost
+    env_file:
+      - backend/.envs/test/key.env
+      - backend/.envs/test/mongo.env
     volumes:
       - ./backend/categories:/app/src
   productsdb:
@@ -37,8 +38,9 @@ services:
     command: python -m flask run --host=0.0.0.0
     environment:
       - FLASK_APP=api.py
-      - API_KEY=testkey
       - MONGO_URI=mongodb://productsdb
+    env_file:
+      - backend/.envs/key.env
     ports:
       - "5002:5000"
     volumes:
@@ -51,9 +53,9 @@ services:
     container_name: api-products-test
     build: backend/products/
     command: /bin/sh -c "coverage run --source='.' /usr/local/bin/nosetests; coverage report -m"
-    environment:
-      - API_KEY=testkey
-      - MONGO_URI=mongomock://localhost
+    env_file:
+      - backend/.envs/test/key.env
+      - backend/.envs/test/mongo.env
     volumes:
       - ./backend/products:/app/src
   gateway:
@@ -62,9 +64,10 @@ services:
     command: python -m flask run --host=0.0.0.0
     environment:
       - FLASK_APP=api.py
-      - API_KEY=testkey
       - URL_CATEGORIES=http://categories:5000
       - URL_PRODUCTS=http://products:5000
+    env_file:
+      - backend/.envs/key.env
     ports:
       - "5000:5000"
     volumes:
@@ -73,8 +76,8 @@ services:
     container_name: api-gateway-test
     build: backend/gateway/
     command: /bin/sh -c "coverage run --source='.' /usr/local/bin/nosetests; coverage report -m"
-    environment:
-      - API_KEY=testkey
+    env_file:
+      - backend/.envs/test/key.env
     volumes:
       - ./backend/gateway:/app/src
   webapp:
